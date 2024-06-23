@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -12,12 +13,14 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Table(name = "room")
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
+    @Min(0)
     private int quantityOfMembers;
 
     @Min(0)
@@ -31,11 +34,10 @@ public class Room {
 
     private boolean personalBathroom;
 
-    private boolean airConditioner;
-
     private boolean personalKitchen;
 
-    @NotBlank
-    private boolean available;
+    private boolean airConditioner;
 
+    @NotBlank
+    private boolean isAvailable;
 }

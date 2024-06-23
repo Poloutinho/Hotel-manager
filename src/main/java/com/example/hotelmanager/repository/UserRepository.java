@@ -1,11 +1,11 @@
 package com.example.hotelmanager.repository;
 
-import com.example.hotelmanager.model.Guest;
+import com.example.hotelmanager.model.User;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface GuestRepository extends JpaRepository<Guest, Long> {
-    Optional<Guest> findByEmail(String email);
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByEmail(String email);
 }
