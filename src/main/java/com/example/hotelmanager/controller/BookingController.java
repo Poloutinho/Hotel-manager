@@ -6,6 +6,7 @@ import com.example.hotelmanager.service.BookingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookingController {
     private final BookingService bookingService;
 
+    @PreAuthorize("ROLE_USER")
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
     public BookingDto save(@RequestBody @Valid CreateBookingRequestDto requestDto,

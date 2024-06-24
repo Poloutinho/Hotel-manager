@@ -4,9 +4,13 @@ import com.example.hotelmanager.dto.user.UserRegistrationRequestDto;
 import com.example.hotelmanager.dto.user.UserResponseDto;
 import com.example.hotelmanager.exception.RegistrationException;
 import com.example.hotelmanager.mapper.UserMapper;
+import com.example.hotelmanager.model.Role;
 import com.example.hotelmanager.model.User;
+import com.example.hotelmanager.repository.RoleRepository;
 import com.example.hotelmanager.repository.UserRepository;
 import com.example.hotelmanager.service.UserService;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -39,6 +44,14 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(requestDto.getFirstName());
         user.setLastName(requestDto.getLastName());
         user.setPhone(requestDto.getPhone());
+        Set<Role> roles = requestDto.getRoles().stream()
+                .map(this::getRole)
+                .collect(Collectors.toSet());
+        user.setRoles(roles);
         return user;
+    }
+
+    private Role getRole(Role.RoleName roleName) {
+        return roleRepository.findByName(roleName).get();
     }
 }
