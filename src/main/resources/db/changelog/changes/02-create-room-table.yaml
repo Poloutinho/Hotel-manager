@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: Polezhay Pavlo
+      changes:
+          - createTable:
+              tableName: room
+              columns:
+                - column:
+                    name: id
+                    type: bigint
+                    autoIncrement: true
+                    constraints:
+                      primaryKey: true
+                - column:
+                    name: quantity_of_members
+                    type: int
+                    constraints:
+                      nullable: false
+                - column:
+                    name: quantity_of_single_bed
+                    type: int
+                    constraints:
+                      nullable: false
+                - column:
+                    name: quantity_of_double_bed
+                    type: int
+                    constraints:
+                      nullable: false
+                - column:
+                    name: area
+                    type: double
+                    constraints:
+                      nullable: false
+                - column:
+                    name: personal_bathroom
+                    type: BIT(1)
+                - column:
+                    name: air_conditioner
+                    type: BIT(1)
+                - column:
+                    name: personal_kitchen
+                    type: BIT(1)
+                - column:
+                    name: is_available
+                    type: BIT(1)
+                    constraints:
+                      nullable: false
