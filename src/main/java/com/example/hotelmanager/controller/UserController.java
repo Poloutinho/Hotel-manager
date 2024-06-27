@@ -10,9 +10,12 @@ import com.example.hotelmanager.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,5 +36,17 @@ public class UserController {
     public UserLoginResponseDto login(@RequestBody UserLoginRequestDto requestDto)
             throws RegistrationException {
         return authenticationService.authenticate(requestDto);
+    }
+
+    @PatchMapping("/{userId}/addRole")
+    public String addRole(@PathVariable Long userId, @RequestParam String roleName)
+            throws RegistrationException {
+        return userService.addRole(userId, roleName);
+    }
+
+    @PatchMapping("/{userId}/removeRole")
+    public String removeRole(@PathVariable Long userId, @RequestParam String roleName)
+            throws RegistrationException {
+        return userService.removeRole(userId, roleName);
     }
 }

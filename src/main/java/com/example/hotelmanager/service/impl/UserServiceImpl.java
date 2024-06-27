@@ -9,8 +9,11 @@ import com.example.hotelmanager.model.User;
 import com.example.hotelmanager.repository.RoleRepository;
 import com.example.hotelmanager.repository.UserRepository;
 import com.example.hotelmanager.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -37,6 +40,56 @@ public class UserServiceImpl implements UserService {
         return userMapper.toResponseDto(savedGuest);
     }
 
+    @Override
+    public String addRole(Long userId, String roleName) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("User with " + userId + " ID is not found"));
+
+        Optional<Role.RoleName> roleNameEnumOpt = Arrays.stream(Role.RoleName.values())
+                .filter(enumValue -> enumValue.name().equals(roleName))
+                .findFirst();
+
+        if (roleNameEnumOpt.isEmpty()) {
+            throw new EntityNotFoundException("Role named " + roleName + " not found!");
+        }
+
+        Role.RoleName roleToAssign = Role.RoleName.valueOf(roleName);
+        Role userRole = getRole(roleToAssign);
+
+        if (user.getRoles().stream().anyMatch(role -> role.getName().equals(roleToAssign))) {
+            return "User with " + userId + " already has the role " + roleName;
+        }
+
+        user.getRoles().add(userRole);
+        userRepository.save(user);
+
+        return "Role " + roleName + " for user with ID: " + userId + " successfully added!";
+    }
+
+    @Override
+    public String removeRole(Long userId, String roleName) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("User with " + userId + " ID is not found"));
+
+        Optional<Role.RoleName> roleNameEnumOpt = Arrays.stream(Role.RoleName.values())
+                .filter(enumValue -> enumValue.name().equals(roleName))
+                .findFirst();
+
+        if (roleNameEnumOpt.isEmpty()) {
+            throw new EntityNotFoundException("Role named " + roleName + " not found!");
+        }
+
+        Role.RoleName roleToAssign = Role.RoleName.valueOf(roleName);
+        Role userRole = getRole(roleToAssign);
+
+        user.getRoles().remove(userRole);
+        userRepository.save(user);
+
+        return "Role " + roleName + " for user with ID: " + userId + " successfully removed!";
+    }
+
     private User mapToUser(UserRegistrationRequestDto requestDto) {
         User user = new User();
         user.setEmail(requestDto.getEmail());
@@ -44,10 +97,11 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(requestDto.getFirstName());
         user.setLastName(requestDto.getLastName());
         user.setPhone(requestDto.getPhone());
-        Set<Role> roles = requestDto.getRoles().stream()
-                .map(this::getRole)
-                .collect(Collectors.toSet());
+        Role userRole = getRole(Role.RoleName.USER);
+        Set<Role> roles = new HashSet<>();
+        roles.add(userRole);
         user.setRoles(roles);
+
         return user;
     }
 
