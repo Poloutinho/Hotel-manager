@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: Polezhay Pavlo
+      changes:
+        - createTable:
+            tableName: bookings
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: room_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: guest_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: start_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_date
+                  type: date
+                  constraints:
+                    nullable: true
+
+        - addForeignKeyConstraint:
+            baseTableName: bookings
+            baseColumnNames: room_id
+            constraintName: fk_booking_room
+            referencedTableName: rooms
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseTableName: bookings
+            baseColumnNames: guest_id
+            constraintName: fk_booking_guest
+            referencedTableName: users
+            referencedColumnNames: id
