@@ -25,11 +25,13 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public List<RoomDto> findAllAvailable() {
-        List<Room> rooms = roomRepository.findAll();
-        rooms.removeIf(room -> !room.isAvailable());
-
-        return rooms.stream()
+        return roomRepository.findAllAvailable().stream()
                 .map(roomMapper::toDto)
                 .toList();
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        roomRepository.deleteById(id);
     }
 }

@@ -4,7 +4,7 @@ databaseChangeLog:
       author: Polezhay Pavlo
       changes:
           - createTable:
-              tableName: room
+              tableName: rooms
               columns:
                 - column:
                     name: id
@@ -44,5 +44,11 @@ databaseChangeLog:
                 - column:
                     name: is_available
                     type: BIT(1)
+                    constraints:
+                      nullable: false
+                - column:
+                    name: is_deleted
+                    type: BIT(1)
+                    defaultValueBoolean: false
                     constraints:
                       nullable: false

@@ -10,6 +10,7 @@ import com.example.hotelmanager.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,12 +39,14 @@ public class UserController {
         return authenticationService.authenticate(requestDto);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PatchMapping("/{userId}/addRole")
     public String addRole(@PathVariable Long userId, @RequestParam String roleName)
             throws RegistrationException {
         return userService.addRole(userId, roleName);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PatchMapping("/{userId}/removeRole")
     public String removeRole(@PathVariable Long userId, @RequestParam String roleName)
             throws RegistrationException {

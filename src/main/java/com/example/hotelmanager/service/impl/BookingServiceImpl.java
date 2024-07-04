@@ -2,7 +2,7 @@ package com.example.hotelmanager.service.impl;
 
 import com.example.hotelmanager.dto.booking.BookingDto;
 import com.example.hotelmanager.dto.booking.CreateBookingRequestDto;
-import com.example.hotelmanager.exception.NoAccessToBookException;
+import com.example.hotelmanager.exception.BookingNotAllowedException;
 import com.example.hotelmanager.mapper.BookingMapper;
 import com.example.hotelmanager.model.Booking;
 import com.example.hotelmanager.model.Room;
@@ -27,7 +27,7 @@ public class BookingServiceImpl implements BookingService {
         Room roomToBook = roomRepository.findById(requestDto.getRoomId()).get();
 
         if (!roomToBook.isAvailable()) {
-            throw new NoAccessToBookException("Can`t book this room, is already booked");
+            throw new BookingNotAllowedException("Can`t book this room, is already booked");
         }
 
         User user = (User)authentication.getPrincipal();

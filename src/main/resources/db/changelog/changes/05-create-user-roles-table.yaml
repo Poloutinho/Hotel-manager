@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: create-user-roles-table
+      id: create-users-roles-table
       author: Pavlo
       changes:
         - createTable:
-            tableName: user_roles
+            tableName: users_roles
             columns:
               - column:
                   name: user_id
@@ -12,19 +12,19 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: roles_id
+                  name: role_id
                   type: bigint
                   constraints:
                     nullable: false
             primaryKey:
               columnNames: user_id, roles_id
             foreignKeyConstraints:
-              - baseTableName: user_roles
+              - baseTableName: users_roles
                 baseColumnNames: user_id
                 constraintName: fk_user_roles_user_id
                 referencedTableName: users
                 referencedColumnNames: id
-              - baseTableName: user_roles
+              - baseTableName: users_roles
                 baseColumnNames: roles_id
                 constraintName: fk_user_roles_roles_id
                 referencedTableName: roles

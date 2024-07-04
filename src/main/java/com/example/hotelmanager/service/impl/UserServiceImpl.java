@@ -34,7 +34,11 @@ public class UserServiceImpl implements UserService {
             throw new RegistrationException("Guest with this email is already registered");
         }
 
-        User guest = mapToUser(requestDto);
+        User guest = userMapper.toUser(requestDto, passwordEncoder);
+        Role userRole = getRole(Role.RoleName.USER);
+        Set<Role> roles = new HashSet<>();
+        roles.add(userRole);
+        guest.setRoles(roles);
         User savedGuest = userRepository.save(guest);
 
         return userMapper.toResponseDto(savedGuest);

@@ -4,7 +4,7 @@ databaseChangeLog:
       author: Polezhay Pavlo
       changes:
         - createTable:
-            tableName: booking
+            tableName: bookings
             columns:
               - column:
                   name: id
@@ -35,15 +35,15 @@ databaseChangeLog:
                     nullable: true
 
         - addForeignKeyConstraint:
-            baseTableName: booking
+            baseTableName: bookings
             baseColumnNames: room_id
             constraintName: fk_booking_room
-            referencedTableName: room
+            referencedTableName: rooms
             referencedColumnNames: id
 
         - addForeignKeyConstraint:
-            baseTableName: booking
+            baseTableName: bookings
             baseColumnNames: guest_id
             constraintName: fk_booking_guest
-            referencedTableName: user
+            referencedTableName: users
             referencedColumnNames: id

@@ -32,7 +32,6 @@ public class BookingController {
 
     @PreAuthorize("ROLE_USER")
     @GetMapping
-    @ResponseStatus(HttpStatus.OK)
     public List<BookingDto> findAll(Authentication authentication) {
         return bookingService.findAll(authentication);
     }

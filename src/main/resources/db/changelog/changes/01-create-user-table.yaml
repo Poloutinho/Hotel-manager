@@ -4,7 +4,7 @@ databaseChangeLog:
       author: Polezhay Pavlo
       changes:
         - createTable:
-            tableName: user
+            tableName: users
             columns:
               - column:
                   name: id
@@ -37,3 +37,9 @@ databaseChangeLog:
               - column:
                   name: phone
                   type: varchar(255)
+              - column:
+                  name: is_deleted
+                  type: BIT(1)
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false

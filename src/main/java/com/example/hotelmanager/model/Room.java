@@ -1,35 +1,33 @@
 package com.example.hotelmanager.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "room")
+@SQLDelete(sql = "UPDATE rooms SET is_deleted = TRUE WHERE id = ?")
+@SQLRestriction("is_deleted = FALSE")
+@Table(name = "rooms")
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    @Min(0)
     private int quantityOfMembers;
 
-    @Min(0)
     private int quantityOfSingleBed;
 
-    @Min(0)
     private int quantityOfDoubleBed;
 
-    @NotBlank
     private double area;
 
     private boolean personalBathroom;
@@ -38,6 +36,8 @@ public class Room {
 
     private boolean airConditioner;
 
-    @NotBlank
     private boolean isAvailable;
+
+    @Column(nullable = false)
+    private boolean isDeleted = false;
 }

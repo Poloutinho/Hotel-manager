@@ -4,7 +4,7 @@ databaseChangeLog:
       author: Pavlo
       changes:
         - insert:
-            tableName: user
+            tableName: users
             columns:
               - column: {name: email, value: "bob@example.com"}
               - column: {name: password, value: "$2a$10$waIZXwnoFUrhL/y7aFbKmO1/zfWq513UdNwXq5TPKeGuuQui.3IqC"}
@@ -12,7 +12,7 @@ databaseChangeLog:
               - column: {name: last_name, value: "Bobson"}
               - column: {name: phone, value: "12345678"}
         - insert:
-            tableName: user
+            tableName: users
             columns:
               - column: {name: email, value: "john@example.com"}
               - column: {name: password, value: "$2a$10$waIZXwnoFUrhL/y7aFbKmO1/zfWq513UdNwXq5TPKeGuuQui.3IqC"}
@@ -20,7 +20,7 @@ databaseChangeLog:
               - column: {name: last_name, value: "Johnson"}
               - column: {name: phone, value: "12345678"}
         - insert:
-            tableName: user
+            tableName: users
             columns:
               - column: {name: email, value: "alice@example.com"}
               - column: {name: password, value: "$2a$10$waIZXwnoFUrhL/y7aFbKmO1/zfWq513UdNwXq5TPKeGuuQui.3IqC"}

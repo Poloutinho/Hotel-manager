@@ -8,4 +8,6 @@ public interface RoomService {
     RoomDto saveRoom(CreateRoomRequestDto room);
 
     List<RoomDto> findAllAvailable();
+
+    void deleteById(Long id);
 }
